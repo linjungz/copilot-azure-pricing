@@ -4,32 +4,32 @@
         "description": "Balanced CPU-to-memory ratio. Ideal for testing and development, small to medium databases, and low to medium traffic web servers.",
         "vm-series": [
             {
-                "name": "Das V4",
+                "name": "Dasv4",
                 "description": "The Das v4-series VMs support Premium SSD disk storage and are based on the 2.35Ghz AMD EPYCTM 7452 processor, which can achieve up to 3.35GHz. The Das v4 VM sizes offer a combination of vCPUs, memory and temporary storage able to meet the requirements associated with most production workloads.",
                 "vm-sizes" : ["Standard_D2as_v4", "Standard_D4as_v4", "Standard_D8as_v4", "Standard_D16as_v4", "Standard_D32as_v4", "Standard_D48as_v4", "Standard_D64as_v4", "Standard_D96as_v4"]
             },
             {
-                "name": "Ds V4",
+                "name": "Dsv4",
                 "description": "The Dsv4 series virtual machines feature the Intel® Xeon® Platinum 8272CL (second generation Intel® Xeon® Scalable processor.) This custom processor runs at a base speed of 2.5Ghz and can achieve up to 3.4Ghz all core turbo frequency. The Dv4/Dsv4 virtual machine sizes do not have any temporary storage. The Dsv4 VM sizes offer a combination of vCPUs and memory able to meet the requirements associated with most production workloads. You can attach Standard SSDs, Standard HDDs, and Premium SSDs disk storage to these VMs. You can also attach Ultra Disk storage based on its regional availability. Disk storage is billed separately from virtual machines. ",
                 "vm-sizes": ["Standard_D2s_v4", "Standard_D4s_v4", "Standard_D8s_v4", "Standard_D16s_v4", "Standard_D32s_v4", "Standard_D48s_v4", "Standard_D64s_v4"]
             },
             {
-                "name": "Das V5",
+                "name": "Dasv5",
                 "description": "The Das v5-series virtual machines are based on the 3rd Generation AMD EPYCTM 7763v (Milan) processor. This processor's frequency can achieve up to 3.5GHz. The Das v5 VM sizes offer a combination of vCPUs and memory able to meet the requirements associated with most production workloads. The Das v5 virtual machine sizes do not have any temporary storage thus lowering the price of entry. You can attach Standard SSDs, Standard HDDs, and Premium SSDs disk storage to these VMs. You can also attach Ultra Disk storage based on its regional availability. Disk storage is billed separately from virtual machines.",
                 "vm-sizes": ["Standard_D2as_v5", "Standard_D4as_v5", "Standard_D8as_v5", "Standard_D16as_v5", "Standard_D32as_v5", "Standard_D48as_v5", "Standard_D64as_v5", "Standard_D96as_v5"]
             },
             {
-                "name": "Ds V5",
+                "name": "Dsv5",
                 "description": "The Dsv5 series virtual machines are based on the 3rd Generation Intel® Xeon® Platinum 8370C (Ice Lake) processor in a hyper-threaded configuration. This custom processor can reach an all-core Turbo clock speed of up to 3.5GHz and features Intel® Turbo Boost Technology 2.0, Intel® Advanced Vector Extensions 512 (Intel® AVX-512) and Intel® Deep Learning Boost.The Dsv5 VM sizes offer a combination of vCPUs and memory able to meet the requirements associated with most production workloads such as small-to-medium databases, low-to-medium traffic web servers, virtual desktops, application servers and more. They also provide a better value proposition for most general-purpose workloads compared to the prior generation (e.g., increased scalability and an upgraded CPU class).The Dv5 and Dsv5 virtual machine sizes do not have any temporary storage thus lowering the price of entry. You can attach Standard SSDs, Standard HDDs, and Premium SSDs disk storage to these VMs. You can also attach Ultra Disk storage based on its regional availability. Disk storage is billed separately from virtual machines. ",
                 "vm-sizes": ["Standard_D2s_v5", "Standard_D4s_v5", "Standard_D8s_v5", "Standard_D16s_v5", "Standard_D32s_v5", "Standard_D48s_v5", "Standard_D64s_v5", "Standard_D96s_v5"]
             },
             {
-                "name": "Bas v2",
+                "name": "Basv2",
                 "description": "The Bas v2 VM series are the latest economical virtual machines that provide a low-cost option for workloads that typically run at a low to moderate baseline CPU utilization, but sometimes need to burst to significantly higher CPU utilization when the demand rises. These workloads don’t require the use of the full CPU all the time, but occasionally will need to burst to finish some tasks more quickly. Many applications such as development and test servers, low traffic web servers, small databases, micro services, servers for proof-of-concepts, build servers, and code repositories fit into this model. This VM series runs on the 3rd Generation AMD EPYC™ 7763v processor in a multi-threaded configuration.You can attach Standard SSDs, Standard HDDs, and Premium SSDs disk storage to these VMs. You can also attach Ultra Disk storage based on its regional availability. Disk storage is billed separately from virtual machines. ",
                 "vm-sizes": ["Standard_B2ats_v2", "Standard_B2als v2", "Standard_B2as_v2", "Standard_B4als_v2", "Standard_B4as_v2", "Standard_B8als_v2", "Standard_B8as_v2", "Standard_B16als_v2", "Standard_B16as_v2", "Standard_B32als_v2", "Standard_B32as_v2"]
             },
             {
-                "name": "Bs v2",
+                "name": "Bsv2",
                 "description": "The Bs v2 VM series are the latest economical virtual machines that provide a low-cost option for workloads that typically run at a low to moderate baseline CPU utilization, but sometimes need to burst to significantly higher CPU utilization when the demand rises. These workloads don’t require the use of the full CPU all the time, but occasionally will need to burst to finish some tasks more quickly. Many applications such as development and test servers, low traffic web servers, small databases, micro services, servers for proof-of-concepts, build servers, and code repositories fit into this model. This VM series runs on the 3rd Generation Intel® Xeon® Platinum 8370C (Ice Lake) processor in a hyper-threaded configuration.You can attach Standard SSDs, Standard HDDs, and Premium SSDs disk storage to these VMs. You can also attach Ultra Disk storage based on its regional availability. Disk storage is billed separately from virtual machines",
                 "vm-sizes": ["Standard_B2ts_v2", "Standard_B2ls_v2", "Standard_B2s_v2", "Standard_B4ls_v2", "Standard_B4s_v2", "Standard_B8ls_v2", "Standard_B8s_v2", "Standard_B16ls_v2", "Standard_B16s_v2", "Standard_B32ls_v2", "Standard_B32s_v2"]
             }
@@ -40,7 +40,7 @@
         "description": "High CPU-to-memory ratio. Good for medium traffic web servers, network appliances, batch processes, and application servers.",
         "vm-series": [
             {
-                "name": "Fs v2",
+                "name": "FSv2",
                 "description": "The Fsv2-series virtual machines provide 2-GiB of RAM and 8 GB of local temporary storage (SSD) per vCPU(s) and are optimized for compute intensive workloads. The Fsv2-series VMs are hyper-threaded and based on the Intel® Xeon® Platinum 8272CL (second generation Intel® Xeon® Scalable processors), or the Intel Xeon® Platinum 8168 (Skylake) processor. These virtual machines are ideal for scenarios like batch processing, web servers, analytics, and gaming. The Fsv2 VMs can be attached to Premium SSD or Ultra Disk persistent storage. Persistent storage disks are billed separately from virtual machines.",
                 "vm-sizes": ["Standard_F2s_v2", "Standard_F4s_v2", "Standard_F8s_v2", "Standard_F16s_v2", "Standard_F32s_v2", "Standard_F64s_v2", "Standard_F72s_v2"]
             }
@@ -51,12 +51,12 @@
         "description": "High memory-to-core ratio. Great for relational database servers, medium to large caches, and in-memory analytics.",
         "vm-series": [
             {
-                "name": "Eas v5",
+                "name": "Easv5",
                 "description": "The Eas v5 series virtual machines are based on the 3rd Generation AMD EPYCTM 7763v (Milan) processor. This processor can achieve a boosted maximum frequency of 3.5GHz. The Eas v5 VM sizes feature up to 672 GiB of RAM, and do not have any temporary storage thus lowering the price of entry. These virtual machines are ideal for memory-intensive enterprise applications, relational database servers, and in-memory analytics workloads.You can attach Standard SSDs, Standard HDDs, and Premium SSDs disk storage to these VMs. You can also attach Ultra Disk storage based on its regional availability. Disk storage is billed separately from virtual machines. ",
                 "vm-sizes": ["Standard_E2as_v5", "Standard_E4as_v5", "Standard_E8as_v5", "Standard_E16as_v5", "Standard_E20as_v5", "Standard_E32as_v5", "Standard_E48as_v5", "Standard_E64as_v5", "Standard_E96as_v5"]
             },
             {
-                "name": "Es v5",
+                "name": "Esv5",
                 "description": "The Ev5 series virtual machines are based on the 3rd Generation Intel® Xeon® Platinum 8370C (Ice Lake) processor in a hyper-threaded configuration. This custom processor can reach an all-core Turbo clock speed of up to 3.5GHz and features Intel® Turbo Boost Technology 2.0, Intel® Advanced Vector Extensions 512 (Intel® AVX-512) and Intel® Deep Learning Boost. The Ev5 and Esv5 VM sizes feature up to 672 GiB of RAM, and do not have any temporary storage thus lowering the price of entry. These virtual machines are ideal for memory-intensive enterprise applications, relational database servers, and in-memory analytics workloads. You can also attach Ultra Disk storage based on its regional availability. Disk storage is billed separately from virtual machines. ",
                 "vm-sizes": ["Standard_E2s_v5", "Standard_E4s_v5", "Standard_E8s_v5", "Standard_E16s_v5", "Standard_E20s_v5", "Standard_E32s_v5", "Standard_E48s_v5", "Standard_E64s_v5", "Standard_E96s_v5", "Standard_E104is_v5"]
             }
@@ -68,12 +68,12 @@
         "description": "Specialized virtual machines targeted for heavy graphic rendering and video editing available with single or multiple GPUs.",
         "vm-series": [
             {
-                "name": "NC A100 v4",
+                "name": "NCads A100 v4",
                 "description": "NC A100 v4 Azure Virtual Machines, powered by NVIDIA Ampere A100 80GB PCIe GPUs and AMD EPYC Milan processors, are optimized for delivery leadership-class performance and cost efficient for a variety of real-word Applied AI workload.",
                 "vm-sizes": ["Standard_NC24ads_A100_v4", "Standard_NC48ads_A100_v4", "Standard_NC96ads_A100_v4"]
             },
             {
-                "name": "ND A100 v4",
+                "name": "NDasr A100 v4",
                 "description": "The ND A100 v4 series is ideal for high-end Deep Learning Training, ML and analytics tasks, and tightly-coupled scale-up and scale-out GPU-accelerated HPC workloads. The series starts with a single virtual machine (VM) and eight NVIDIA Ampere A100 Tensor Core GPUs, but our ND A100 v4-based clusters can also scale up to thousands of GPUs with an unprecedented 1.6 Tb/s of interconnect bandwidth per VM. Each GPU is provided with its own dedicated topology-agnostic 200 Gb/s NVIDIA Mellanox HDR InfiniBand connection. Tens, hundreds, or thousands of GPUs can then work together as part of a Mellanox InfiniBand HDR cluster to achieve any level of AI ambition.",
                 "vm-sizes": ["Standard_ND96asr_v4"]
             }

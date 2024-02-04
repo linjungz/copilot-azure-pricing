@@ -1,39 +1,35 @@
 import streamlit as st
 import utils
-from tabulate import tabulate
 
 
 
 helper = utils.AzurePricingHelper()
-regions_with_az = helper.load_regions_with_AZ()
+
+regions_with_az = helper.get_regions_with_AZ()
 # Extract the 'displayName' of each region
 regions = [region['displayName'] for region in regions_with_az]
 # Extract the 'geographyGroup' of each region and remove duplicates by converting the list to a set
 geography_groups = list(set(region['geographyGroup'] for region in regions_with_az))
-vm_categories = helper.load_categories()
+
+vm_categories = helper.get_all_categories()
+
 selected_geography_groups = []
 selected_regions = []
 selected_categories = []
 selected_vm_series_names = []
+selected_vm_vcpus = []
 
 # Fucntion called by submit button
-def batch_query_prices(regions, vm_sizes):
-    price_data = []
-    for vm_size in vm_sizes:
-        for region_name in regions:
-            region_code = helper.get_region_code_by_name(region_name)
-            vm_price = helper.query_vm_price(region_code, vm_size)
-            price_data.append([
-                vm_size, 
-                region_name, 
-                "${:.4f}".format(vm_price['payg_hourly']),
-                "${:.4f}".format(vm_price['sp_1y_hourly']),
-                "${:.4f}".format(vm_price['sp_3y_hourly']),
-                "${:.4f}".format(vm_price['ri_1y_hourly']),
-                "${:.4f}".format(vm_price['ri_3y_hourly']),
-            ])
+def submit_btn_on_click(region_names, vm_skus, vm_vcpus):
+    filtered_vm_skus = helper.filter_vm_sku_by_vcpu(vm_skus, vm_vcpus)
+    if filtered_vm_skus:
+        result, err = helper.batch_query_prices(region_names, filtered_vm_skus)
+        # print(result, err)
+        st.markdown(result)
+    else:
+        st.markdown("No VM SKUs found for the given configuration")
 
-    print(tabulate(price_data, headers=["VM Size", "Region", "PAYG", "SP 1Y", "SP 3Y", "RI 1Y", "RI 3Y"], tablefmt="pretty"))
+
 
 with st.sidebar:
     st.title('Copilot for Azure Pricing')
@@ -96,14 +92,16 @@ with st.sidebar:
 
     if selected_vm_series_names:
         with st.expander("Virtual Machine Configuration", True):
-            selected_vm_cpu = st.multiselect(
+            vcpus = helper.get_vm_vcpu_range()
+            selected_vm_vcpus = st.multiselect(
                 label="vCPU(s)",
-                options=helper.vm_cpu_range(),
+                options=vcpus,
                 placeholder=f"Select # of vCPUs",
+                default=2
             )
 
         col1, col2, col3 = st.columns(3)
-        col2.button("Submit", type="primary", on_click=batch_query_prices, args=(selected_regions, selected_vm_sizes))
+        col2.button("Submit", type="primary", on_click=submit_btn_on_click, args=(selected_regions, selected_vm_sizes, selected_vm_vcpus))
         # col3.button("Reset", type="secondary", on_click=send_message, args=("reset", "assistant"))
 
 
