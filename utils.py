@@ -8,6 +8,7 @@ from tabulate import tabulate
 AZURE_PRICING_URL = "https://prices.azure.com/api/retail/prices"
 AZURE_PRICING_API_VERION = "2023-01-01-preview"
 PRICING_RESPONSE_DIR = "price_api_response"
+AZURE_PRICING_MONTHLY_FACTOR=730
 
 class AzurePricingHelper:
     def __init__(self):
@@ -20,13 +21,13 @@ class AzurePricingHelper:
         
         # load vm-series.json and create dicts for :
         # - vm_series_by_category : category -> vm-series
-        # - vm_sizes_by_series    : vm-series -> vm-sizes
+        # - vm_skus_by_series    : vm-series -> vm-skus
         self.vm_series_json = []
         with open('vm-series.json') as f:
             self.vm_series_json = json.load(f)
 
         self.vm_series_names_by_category = {}
-        self.vm_sizes_by_series = {}
+        self.vm_skus_by_series = {}
 
         for category in self.vm_series_json:
             vm_series = category['vm-series']
@@ -34,18 +35,18 @@ class AzurePricingHelper:
             self.vm_series_names_by_category[category['category']] = vm_series_names
 
             for item in vm_series:
-                self.vm_sizes_by_series[item['name']] = item['vm-sizes']
+                self.vm_skus_by_series[item['name']] = item['vm-skus']
 
-        # load vm-sizes-eastus2.json and create dicts for:
-        # - vm_configs_by_vm_sizes : vm-sizes -> vm-configs
+        # load vm-skus-eastus2.json and create dicts for:
+        # - vm_configs_by_vm_skus : vm-skus -> vm-configs
                 
-        # Use East US 2 to retrieve all vm sizes
-        self.vm_sizes_json = []
-        with open('vm-sizes-eastus2.json') as f:
-            self.vm_sizes_json = json.load(f)
+        # Use East US 2 to retrieve all vm skus
+        self.vm_skus_json = []
+        with open('vm-skus-eastus2.json') as f:
+            self.vm_skus_json = json.load(f)
 
         self.vm_config_by_vm_sku = {}
-        for item in self.vm_sizes_json:
+        for item in self.vm_skus_json:
             self.vm_config_by_vm_sku[item['name']] = {
                 "numberOfCores": item['numberOfCores'],
                 "memoryInGB": item['memoryInMB'] / 1024,
@@ -86,6 +87,17 @@ class AzurePricingHelper:
             region_codes.append(region['code'])
         
         return region_codes
+    
+    def get_all_region_names_with_AZ(self):
+        regions = self.get_regions_with_AZ()
+        region_codes = []
+        for region in regions:
+            region_codes.append(region['displayName'])
+        
+        return region_codes
+    
+    def get_all_vm_series(self):
+        return self.vm_series_json
             
     def get_all_categories(self):
         
@@ -104,22 +116,34 @@ class AzurePricingHelper:
 
         return all_vm_series_names
         
-    def get_vm_sizes_from_vm_series_names(self, vm_series_names):
-        vm_sizes = []
+    def get_vm_skus_from_vm_series_names(self, vm_series_names):
+        vm_skus = []
 
         if vm_series_names:    
             for vm_series_name in vm_series_names:
-                vm_sizes.extend(self.vm_sizes_by_series[vm_series_name])
+                vm_skus.extend(self.vm_skus_by_series[vm_series_name])
             
-        return vm_sizes
+        return vm_skus
+    
     
     def get_all_vm_skus(self):
         all_skus = []
 
-        for vm_series, vm_skus in self.vm_sizes_by_series.items():
+        for vm_series, vm_skus in self.vm_skus_by_series.items():
             all_skus.extend(vm_skus)
         
         return all_skus
+    
+    def get_virtual_machine_config_by_sku(self, vm_sku):
+        return self.vm_config_by_vm_sku[vm_sku]
+    
+    def get_virtual_machine_config_by_skus(self, vm_skus):
+        configs = {}
+        for sku in vm_skus:
+            configs[sku] = self.vm_config_by_vm_sku[sku]
+
+        return configs
+            
 
     def get_vm_vcpu_range(self):
         return [1, 2, 4, 6, 8, 12, 16, 24, 32, 64, 96, 128]
@@ -238,18 +262,23 @@ class AzurePricingHelper:
                             price = price_by_sku_by_region[item['armSkuName']][item['armRegionName']]
                             if 'savingsPlan' in item:
                                 price['payg_hourly'] = item['retailPrice']
+                                price['payg_monthly'] = price['payg_hourly'] * AZURE_PRICING_MONTHLY_FACTOR
                                 for sp_item in item['savingsPlan']:
                                     if sp_item['term'] == '3 Years':
                                         price['sp_3y_hourly'] = sp_item['retailPrice']
+                                        price['sp_3y_monthly'] = price['sp_3y_hourly'] * AZURE_PRICING_MONTHLY_FACTOR
                                     if sp_item['term'] == '1 Year':
                                         price['sp_1y_hourly'] = sp_item['retailPrice']
+                                        price['sp_1y_monthly'] = price['sp_1y_hourly'] * AZURE_PRICING_MONTHLY_FACTOR
                             else: 
                                 # it should be reservation:
                                 if item['type'] == 'Reservation':
                                     if item['reservationTerm'] == '3 Years':
-                                        price['ri_3y_hourly'] = float(item['retailPrice']) / 3 / 12 / 730
+                                        price['ri_3y_hourly'] = float(item['retailPrice']) / 3 / 12 / AZURE_PRICING_MONTHLY_FACTOR
+                                        price['ri_3y_monthly'] = price['ri_3y_hourly'] * AZURE_PRICING_MONTHLY_FACTOR
                                     if item['reservationTerm'] == '1 Year':
-                                        price['ri_1y_hourly'] = float(item['retailPrice']) / 12 / 730
+                                        price['ri_1y_hourly'] = float(item['retailPrice']) / 12 / AZURE_PRICING_MONTHLY_FACTOR
+                                        price['ri_1y_monthly'] = price['ri_1y_hourly'] * AZURE_PRICING_MONTHLY_FACTOR
 
                         cur += 1
             
@@ -264,6 +293,11 @@ class AzurePricingHelper:
         #     "sp_1y_hourly": 12.2296208,
         #     "ri_1y_hourly": 9.604109589041096,
         #     "ri_3y_hourly": 5.45220700152207
+        #     "payg_monthly": 10700.16,
+        #     "sp_3y_monthly": 6607.2,
+        #     "sp_1y_monthly": 8908.16,
+        #     "ri_1y_monthly": 6989.12,
+        #     "ri_3y_monthly": 3961.6
         # }
         if vm_sku not in self.price_by_sku_by_region:
             raise Exception(f"VM sku {vm_sku} not supported.")

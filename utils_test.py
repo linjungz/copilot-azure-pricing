@@ -4,19 +4,29 @@ import json
 
 helper = utils.AzurePricingHelper()
 
-# Get all vm skus:
+# # Get all vm skus:
 # print(helper.get_all_vm_skus())
 
-# Get all regions with AZ, with all information
+# # Get all regions with AZ, with all information
 # print(helper.get_regions_with_AZ())
 
-# Get all regions with AZ, with only code
+# # Get all regions with AZ, with only code
 # print(helper.get_all_region_codes_with_AZ())
 
 # Retrieve pricing data
-# regions = ["westus2", "eastus2"]
+regions = ["westus2", "eastus2"]
 # regions = []
 # helper.retrieve_pricing_data_and_save_local(regions)
+
+# Get VM sku by filtering config
+# vm_skus = ["Standard_F4s_v2", "Standard_D2as_v5"]
+# vcpus = [2, 4]
+# filtered_vm_skus = helper.filter_vm_sku_by_vcpu(vm_skus, vcpus)
+# print(filtered_vm_skus)
+
+# Get vm config by SKU
+vm_skus = "Standard_D4as_v5"
+print(helper.get_virtual_machine_config_by_sku(vm_skus))
 
 # Get all price data:
 # print(json.dumps(helper.get_price_data(), indent=4))
@@ -32,8 +42,4 @@ helper = utils.AzurePricingHelper()
 # result, e = helper.batch_query_prices(region_names, vm_skus)
 # print(result, e)
 
-# Get VM config by sku
-vm_skus = ["Standard_D4as_v5", "Standard_D2as_v5"]
-vcpus = [2, 4]
-filtered_vm_skus = helper.filter_vm_sku_by_vcpu(vm_skus, vcpus)
-print(filtered_vm_skus)
+
