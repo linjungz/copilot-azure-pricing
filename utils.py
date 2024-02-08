@@ -288,6 +288,8 @@ class AzurePricingHelper:
         # Get price data by looking up vm sku and region code:
         # Sample price data is :
         # {
+        #     "sku": "Standard_D4as_v5",
+        #     "region": "westus2",
         #     "payg_hourly": 14.692,
         #     "sp_3y_hourly": 9.0634948,
         #     "sp_1y_hourly": 12.2296208,
@@ -305,7 +307,13 @@ class AzurePricingHelper:
         if region_code not in self.price_by_sku_by_region[vm_sku]:
             raise Exception(f"VM sku {vm_sku} not available in region {region_code}.")
         
-        return self.price_by_sku_by_region[vm_sku][region_code]
+        price = self.price_by_sku_by_region[vm_sku][region_code]
+        price['sku'] = vm_sku
+        price['region'] = region_code
+
+        return price
+        
+        
     
     def batch_query_prices(self, region_names, vm_skus):
         price_data = []

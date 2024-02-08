@@ -140,9 +140,9 @@ helper = utils.AzurePricingHelper()
 #     return len(word)
 
 @tool
-def get_available_regions() -> dict:
+def get_regions_with_availability_zones() -> dict:
     """
-    Return a json of all available Azure regions with support for Availability Zones
+    Return a json of all Azure regions,  with support for Availability Zones
     Actually Azure has lots of regions, but here we only return part of them, which has support for Availability Zones.
     Each region has the following information:
     displayName: The user-friendly name of the region. For example, "West US 2" or "Southeast Asia".
@@ -198,7 +198,7 @@ def get_latest_virtual_machine_price(sku: str, region: str) -> dict:
     return helper.get_price_data_by_vm_sku_by_region(sku, region)
 
 tools = [
-    get_available_regions, 
+    get_regions_with_availability_zones, 
     get_latest_virtual_machines_types,
     get_virtual_machine_config_by_skus,
     get_latest_virtual_machine_price
@@ -240,7 +240,7 @@ prompt = ChatPromptTemplate.from_messages([
      If it's for test, vm with burstable cpu could be used for economical purpose. 
      But this is not recommended for production.
      - The number of VCPUs and memory capacity should be sufficient for the application
-     You could check the price for virtual machine types that satisfied these rules and suggest one or two virtual machine types that's most cost-effective.
+     You could check the price for virtual machine types that satisfied these rules and suggest one virtual machine types that's most cost-effective.
 
      ### Virtual Machine Prices:
      - By default, provide the pay-as-you-go price for virtual machine is enough. 
