@@ -49,13 +49,5 @@ You could refer to the [Azure Quickstart Guide](https://learn.microsoft.com/en-u
 5. Run the app
 
 ```bash
-$ streamlit run app.py --server.address '0.0.0.0'
-
-Collecting usage statistics. To deactivate, set browser.gatherUsageStats to False.
-
-
-  You can now view your Streamlit app in your browser.
-
-  URL: http://0.0.0.0:8501```
+$ streamlit run app.py
 ```
-

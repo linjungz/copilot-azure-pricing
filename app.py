@@ -11,7 +11,7 @@ from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputP
 from langchain.agents import AgentExecutor
 from langchain_core.messages import AIMessage, HumanMessage
 
-AGENT_LANGUAGE = "Simplified Chinese"
+# AGENT_LANGUAGE = "Simplified Chinese"
 
 
 helper = utils.AzurePricingHelper()
@@ -195,7 +195,7 @@ prompt = ChatPromptTemplate.from_messages([
      If user asks about other topics, you should respond with "I can only help with questions related to Azure cloud."
 
      # Response
-     - The language of your response should be in {AGENT_LANGUAGE} . 
+     - The language of your response should be strictly the same to user's question's language.
      - Please answer the question concisely. You could explain the details if user requested.
      - When referring to VM types, you could use more user-friendly name, for example, when refer to "Standard_D2asv5", you could simply sai D2asv5
      - When referring to region, you should stick to English only. Don't translate the region name to other language.
@@ -226,6 +226,12 @@ agent_executor = AgentExecutor(
     max_execution_time=60).with_config(
     {"run_name": "Agent"}
 )
+
+
+# Main UI
+st.title("Copilot for Azure Pricing")
+st.write("AI assistant designed to guide users in selecting the most cost-effective Azure region and virtual machine types based on up-to-date pricing data, powered with LangChain and GPT-4.")
+st.write("Start by asking a question or providing a description of your requirements. For example, you can ask for cost estimation for a new workload in the West US 2 region.")
 
 # Initialize chat history
 if "messages" not in st.session_state:
