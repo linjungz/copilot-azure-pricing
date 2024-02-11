@@ -2,6 +2,8 @@
 
 The Copilot for Azure Pricing is a demo project created using LangChain and Azure GPT-4. It is designed to provide suggestions on Azure region and virtual machine types based on the latest pricing data and other considerations. This AI-powered agent aims to assist users in making informed decisions when it comes to choosing the most cost-effective options for their Azure deployments.
 
+![Demo](assets/image.png)
+
 ## Get Started
 
 Follow these steps to get started:
