@@ -11,6 +11,8 @@ from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputP
 from langchain.agents import AgentExecutor
 from langchain_core.messages import AIMessage, HumanMessage
 
+load_dotenv(override=True)
+
 # AGENT_LANGUAGE = "Simplified Chinese"
 
 
@@ -43,14 +45,13 @@ def submit_btn_on_click(region_names, vm_skus, vm_vcpus):
 # Chat UI for interact with agent directly
 st_callback = StreamlitCallbackHandler(st.container())
 
-load_dotenv()
 
 # Define LLM
 llm = AzureChatOpenAI(
     api_version="2023-12-01-preview",
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     azure_endpoint=os.getenv("AZURE_OPENAI_API_ENDPOINT"),
-    model="gpt-4-1106-preview",
+    model=os.getenv("AZURE_OPENAI_API_DEPLOYMENT"),
     temperature=0,
     streaming=True
 )
